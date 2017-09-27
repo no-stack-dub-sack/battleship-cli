@@ -55,6 +55,13 @@ function initializeGame(callback) {
                 });
             }
         },
+        {
+            type: 'list',
+            name: 'options',
+            message: 'Would you like to see instructions?',
+            choices: ['No thanks, let\'s play!', 'Yes, please' ],
+            default: 0
+        }
     ];
 
     inquirer.prompt(questions).then(callback);
@@ -250,7 +257,33 @@ function __continue(callback) {
  * EXECUTE PROGRAM:
 */
 
-initializeGame(() => {
-    game.populateP1Ships();
-    configureP1Ships(P1_SHIPS);
+initializeGame(answer => {
+    if (answer.options === 'Yes, please') {
+         var instructions = `
+Type '${chalk.red.underline('help')}' at any time to show these instructions.
+
+Other helpful commands:
+  - Type '${chalk.keyword('orange').underline('show board')}' at any time to see your own board including ship configuration, ships hit, and misses.
+  - Type '${chalk.keyword('orange').underline('show score')}' at any time to check the status of the game.
+  - Type '${chalk.keyword('orange').underline('quit')}' at any time to quit the game.
+
+Gameplay:
+  - To play, configure your five ships on your 10x10 board in any pattern you'd like (diagonal placements are not allowed), the computer will do the same.
+  - To configure your ships, follow the prompts, and use instructions that include a ship name, a starting coordinate, and a direction in which to place your ship.
+  - Once both players have configured their boards, the race is on to sink your opponents ships before they sink yours!
+  - Fire torpedos at your opponents ships by guessing coordinates on the 10x10 board.
+  - Rows are represented by the letters A-J, and columns with the numbers 1-10. Valid guesses include a row followed by a column, e.g. A1, B7, J10, etc.
+  - To configure your ships, use the name of the
+
+`;
+
+        console.log(instructions)
+        __continue(() => {
+            game.populateP1Ships();
+            configureP1Ships(P1_SHIPS);
+        });
+    } else {
+        game.populateP1Ships();
+        configureP1Ships(P1_SHIPS);
+    }
 });
