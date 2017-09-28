@@ -1,12 +1,12 @@
 const chalk = require('chalk');
 
 const INSTRUCTIONS = `
-Type '${chalk.red.underline('help')}' at any time to show these instructions.
+Type ${chalk.red.underline('help')} at any time to show these instructions.
 
 ${chalk.bold('Other helpful commands:')}
-- Type '${chalk.keyword('orange').underline('show board')}' at any time to see your own board including ship configuration, ships hit, and misses.
-- Type '${chalk.keyword('orange').underline('show score')}' at any time to check the status of the game.
-- Type '${chalk.keyword('orange').underline('quit')}' at any time to quit the game.
+- Type ${chalk.keyword('orange').underline('show board')} at any time to see your own board including ship configuration, ships hit, and misses.
+- Type ${chalk.keyword('orange').underline('show score')} at any time to check the status of the game.
+- Type ${chalk.keyword('orange').underline('quit')} at any time to quit the game.
 
 ${chalk.bold('How to win:')}
 - Each player has a battlefield represented by a 10x10 grid on which they place 5 ships, hidden to their opponent.
@@ -31,7 +31,7 @@ ${chalk.bold('Legend:')}
 - Cruiser, 3 spaces
 - Destroyer, 2 spaces
 - Submarine, 3 spaces
-- A hit looks like this: ${chalk.bgKeyword('orange').red.bold(' X ')}
+- A hit looks like this: $ }
 - A miss looks like this: ${chalk.bgKeyword('blue').cyan.bold(' O ')}
 `;
 
