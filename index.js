@@ -1,11 +1,13 @@
-const clear    = require('clear');
-const Game     = require('./lib/Game');
-const chalk    = require('chalk');
-const figlet   = require('figlet');
-const inquirer = require('inquirer');
-const CLI      = require('clui');
-const Spinner  = CLI.Spinner;
-const game     = new Game();
+#!/usr/bin/env node
+const clear        = require('clear');
+const Game         = require('./lib/Game');
+const chalk        = require('chalk');
+const figlet       = require('figlet');
+const inquirer     = require('inquirer');
+const CLI          = require('clui');
+const Spinner      = CLI.Spinner;
+const game         = new Game();
+const INSTRUCTIONS = require('./utils/instructions');
 
 const P1_SHIPS = [
     'Cruiser, 3',
@@ -16,12 +18,15 @@ const P1_SHIPS = [
 ];
 
 /** TODO:
-* import messages from util file
-* move isCoordinateValid to util file
-* enable difficulty settings (size of board?, cpu makes wild guess every time)
-* add instructions option/prompt at game initialization
-* also make instructions available via 'help' command at any time via commandCenter
-*/
+  * import messages from util file
+  * move isCoordinateValid to util file
+  * normalize code / naming conventions
+  * enable difficulty settings (size of board?, cpu makes wild guess every time)
+  * add instructions option/prompt at game initialization
+  * also make instructions available via 'help' command at any time via commandCenter
+  * fix repeated replace()'s in Player.js ==> showBoard
+  * add hints to instructions about abbreviations
+* */
 
 
 /**
@@ -71,7 +76,7 @@ function configureP1Ships(ships) {
     var message =
         `Ships remaining [type, size]: ${chalk.dim(JSON.stringify(ships).replace(/"/g, "'"))}` +
         (ships.length === 5 ? '\n  Use coordinates A1-J10 and left, right, up or down\n' : '\n') +
-        ` Place a ship! ${chalk.dim(' e.g. cruiser b3 right')}`;
+        `  Place a ship! ${chalk.dim(' e.g. cruiser b3 right')}`;
 
     const question = [
         {
@@ -223,6 +228,8 @@ function gameOver() {
 
 function commandCenter(value, validations) {
     switch (value) {
+        case 'help':
+            return INSTRUCTIONS;
         case 'show board':
             return game.playerOne.showBoard();
         case 'show score':
@@ -259,25 +266,7 @@ function __continue(callback) {
 
 initializeGame(answer => {
     if (answer.options === 'Yes, please') {
-         var instructions = `
-Type '${chalk.red.underline('help')}' at any time to show these instructions.
-
-Other helpful commands:
-  - Type '${chalk.keyword('orange').underline('show board')}' at any time to see your own board including ship configuration, ships hit, and misses.
-  - Type '${chalk.keyword('orange').underline('show score')}' at any time to check the status of the game.
-  - Type '${chalk.keyword('orange').underline('quit')}' at any time to quit the game.
-
-Gameplay:
-  - To play, configure your five ships on your 10x10 board in any pattern you'd like (diagonal placements are not allowed), the computer will do the same.
-  - To configure your ships, follow the prompts, and use instructions that include a ship name, a starting coordinate, and a direction in which to place your ship.
-  - Once both players have configured their boards, the race is on to sink your opponents ships before they sink yours!
-  - Fire torpedos at your opponents ships by guessing coordinates on the 10x10 board.
-  - Rows are represented by the letters A-J, and columns with the numbers 1-10. Valid guesses include a row followed by a column, e.g. A1, B7, J10, etc.
-  - To configure your ships, use the name of the
-
-`;
-
-        console.log(instructions)
+        console.log(INSTRUCTIONS)
         __continue(() => {
             game.populateP1Ships();
             configureP1Ships(P1_SHIPS);
