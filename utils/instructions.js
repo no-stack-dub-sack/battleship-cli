@@ -31,7 +31,7 @@ ${chalk.bold('Legend:')}
 - Cruiser, 3 spaces
 - Destroyer, 2 spaces
 - Submarine, 3 spaces
-- A hit looks like this: $ }
+- A hit looks like this: ${chalk.bgKeyword('orange').red.bold(' X ')}
 - A miss looks like this: ${chalk.bgKeyword('blue').cyan.bold(' O ')}
 `;
 
