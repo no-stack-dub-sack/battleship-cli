@@ -1,12 +1,12 @@
 const chalk = require('chalk');
 
 const INSTRUCTIONS = `
-Type ${chalk.red.underline('help')} at any time to show these instructions.
+Type ${chalk.red('help')} at any time to show these instructions.
 
 ${chalk.bold('Other helpful commands:')}
-- Type ${chalk.keyword('orange').underline('show board')} at any time to see your own board including ship configuration, ships hit, and misses.
-- Type ${chalk.keyword('orange').underline('show score')} at any time to check the status of the game.
-- Type ${chalk.keyword('orange').underline('quit')} at any time to quit the game.
+- Type ${chalk.keyword('orange')('show board')} at any time to see your own board including ship configuration, ships hit, and misses.
+- Type ${chalk.keyword('orange')('show score')} at any time to check the status of the game.
+- Type ${chalk.keyword('orange')('quit')} or ${chalk.keyword('orange')('q')} at any time to quit the game.
 
 ${chalk.bold('How to win:')}
 - Each player has a battlefield represented by a 10x10 grid on which they place 5 ships, hidden to their opponent.
@@ -17,7 +17,7 @@ ${chalk.bold('How to win:')}
 ${chalk.bold('Gameplay:')}
 - To play, follow the prompts to configure your five ships in any pattern you'd like (diagonal placements are not allowed).
 - Valid configuration instructions include a ship name, a starting coordinate (A1-J10), and a direction (right, left, up or down).
-- For example: "submarine e3 up" or "carrier j10 left". Ships cannot overlap, and you must stay within the bounds of the board.
+- For example: ${chalk.keyword('orange')('submarine e3 up')} or ${chalk.keyword('orange')('carrier j10 left')}. Ships cannot overlap, and you must stay within the bounds of the board.
 - Once both players have configured their ships, the race is on to sink your opponent's ships before they sink yours!
 - Fire torpedoes at your opponent's ships by guessing coordinates on the 10x10 board.
 - Rows are represented by the letters A-J, and columns with the numbers 1-10.
@@ -26,13 +26,21 @@ ${chalk.bold('Gameplay:')}
 - Sink all 5 of the computer's ships to win!
 
 ${chalk.bold('Legend:')}
-- Battleship, 4 spaces
-- Carrier, 5 spaces
-- Cruiser, 3 spaces
-- Destroyer, 2 spaces
-- Submarine, 3 spaces
+- Battleship (BTL), 4 spaces
+- Carrier (CAR), 5 spaces
+- Cruiser (CRU), 3 spaces
+- Destroyer (DST), 2 spaces
+- Submarine (SUB), 3 spaces
 - A hit looks like this: ${chalk.bgKeyword('orange').red.bold(' X ')}
 - A miss looks like this: ${chalk.bgKeyword('blue').cyan.bold(' O ')}
+
+${chalk.bold('Hint:')}
+- When placing ships, you can also use abbreviations to make your life easier!
+- Use the ship's abbreviations (above), and single letters for directions.
+- e.g. ${chalk.keyword('orange')('btl a9 r')} or ${chalk.keyword('orange')('cru i6 u')}
 `;
 
-module.exports = INSTRUCTIONS;
+module.exports = {
+    INSTRUCTIONS,
+    HELPER: `\n\nType the command ${chalk.keyword('orange')('show board')} and press ${chalk.green('return')} at any time to see your baord!\n`
+}

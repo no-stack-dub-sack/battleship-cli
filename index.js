@@ -1,13 +1,15 @@
 #!/usr/bin/env node
-const clear        = require('clear');
-const Game         = require('./lib/Game');
-const chalk        = require('chalk');
-const figlet       = require('figlet');
-const inquirer     = require('inquirer');
-const CLI          = require('clui');
-const Spinner      = CLI.Spinner;
-const game         = new Game();
-const INSTRUCTIONS = require('./utils/instructions');
+const clear    = require('clear');
+const Game     = require('./lib/Game');
+const chalk    = require('chalk');
+const figlet   = require('figlet');
+const inquirer = require('inquirer');
+const CLI      = require('clui');
+const Spinner  = CLI.Spinner;
+const game     = new Game();
+
+const { HELPER, INSTRUCTIONS } = require('./utils/instructions');
+const { isCoordinateValid } = require('./utils/helpers');
 
 const P1_SHIPS = [
     'Cruiser, 3',
@@ -22,10 +24,13 @@ const P1_SHIPS = [
   * move isCoordinateValid to util file
   * normalize code / naming conventions
   * enable difficulty settings (size of board?, cpu makes wild guess every time)
-  * add instructions option/prompt at game initialization
-  * also make instructions available via 'help' command at any time via commandCenter
+  // * add instructions option/prompt at game initialization
+  // * also make instructions available via 'help' command at any time via commandCenter
   * fix repeated replace()'s in Player.js ==> showBoard
   * add hints to instructions about abbreviations
+  * render board on first ship placement to give user visual cue of game
+  * make status updates reflective of who is winning
+  * make board look more like a grid, get rid of commas
 * */
 
 
@@ -53,7 +58,7 @@ function initializeGame(callback) {
         {
             type: 'input',
             name: 'ready',
-            message: 'Welcome to Battleship CLI! Press enter to continue.',
+            message: ' Welcome to Battleship CLI! Press enter to continue.',
             validate: value => {
                 return commandCenter(value, () => {
                     return true;
@@ -63,8 +68,8 @@ function initializeGame(callback) {
         {
             type: 'list',
             name: 'options',
-            message: 'Would you like to see instructions?',
-            choices: ['No thanks, let\'s play!', 'Yes, please' ],
+            message: ' Would you like to see instructions?',
+            choices: [' No thanks, let\'s play!', ' Yes, please' ],
             default: 0
         }
     ];
@@ -73,16 +78,21 @@ function initializeGame(callback) {
 }
 
 function configureP1Ships(ships) {
-    var message =
-        `Ships remaining [type, size]: ${chalk.dim(JSON.stringify(ships).replace(/"/g, "'"))}` +
-        (ships.length === 5 ? '\n  Use coordinates A1-J10 and left, right, up or down\n' : '\n') +
-        `  Place a ship! ${chalk.dim(' e.g. cruiser b3 right')}`;
+
+    if (ships.length === 5) {
+        console.log('\n' + game.playerOne.showBoard() + HELPER);
+    }
+
+    const INSTRUCTION =
+    ` Ships remaining [type, size]: ${chalk.dim(JSON.stringify(ships).replace(/"/g, "'"))}` +
+    (ships.length === 5 ? '\n   Use coordinates A1-J10 and left, right, up or down\n' : '\n') +
+    `   Place a ship! ${chalk.dim(' e.g. cruiser b3 right')}`;
 
     const question = [
         {
             type: 'input',
             name: 'placeShip',
-            message: message,
+            message: INSTRUCTION,
             validate: value => {
                 return commandCenter(value, () => {
                     const instructions = value.split(' ');
@@ -108,7 +118,7 @@ function configureP1Ships(ships) {
     ];
     // recurse until all ships are placed
     inquirer.prompt(question).then(() => {
-        if (game.playerOneReady()) {
+        if (game.readyPlayerOne()) {
             game.setInitialState();
             startGame();
         } else {
@@ -132,7 +142,7 @@ function startGame() {
         {
             type: 'input',
             name: 'ready',
-            message: `Ready to play? ${game.message} ${chalk.dim('(press enter to continue)')}`,
+            message: ` Ready to play? ${game.message} ${chalk.dim('(press enter to continue)')}`,
             validate: val => {
                 return commandCenter(val, () => {
                     return true;
@@ -169,10 +179,10 @@ function takeTurn() {
         {
             type: 'input',
             name: 'coords',
-            message: `Take a guess! Enter coordinates A1-J10: ${chalk.dim(' (e.g. B7)')}`,
+            message: ` Take a guess! Enter coordinates A1-J10: ${chalk.dim(' (e.g. B7)')}`,
             validate: value => {
                 return commandCenter(value, () => {
-                    if (game.playerOne.isCoordinateValid(value)) {
+                    if (isCoordinateValid(value)) {
                         return true;
                     } else {
                         return "Please enter valid coordinates"
@@ -209,9 +219,9 @@ function gameOver() {
 
     inquirer.prompt(question).then(answer => {
         if (answer.newGame) {
-            game.reset();
-            console.log('Ready? Here we go again...');
+            console.log('   Ready? Here we go again...');
             setTimeout(() => {
+                game.reset();
                 game.populateP1Ships();
                 configureP1Ships(P1_SHIPS);
             }, 1000);
@@ -248,7 +258,7 @@ function __continue(callback) {
         {
             type: 'input',
             name: 'continue',
-            message: 'Press enter to continue',
+            message: ' Press enter to continue',
             validate: value => {
                 return commandCenter(value, () => {
                     return true;
@@ -265,7 +275,7 @@ function __continue(callback) {
 */
 
 initializeGame(answer => {
-    if (answer.options === 'Yes, please') {
+    if (answer.options === ' Yes, please') {
         console.log(INSTRUCTIONS)
         __continue(() => {
             game.populateP1Ships();
