@@ -8,8 +8,10 @@ const CLI      = require('clui');
 const Spinner  = CLI.Spinner;
 const game     = new Game();
 
+require('dotenv').config()
+
 const { HELPER, INSTRUCTIONS } = require('./utils/instructions');
-const { isCoordinateValid } = require('./utils/helpers');
+const { isCoordinateValid }    = require('./utils/helpers');
 
 const P1_SHIPS = [
     'Cruiser, 3',
@@ -20,25 +22,14 @@ const P1_SHIPS = [
 ];
 
 /** TODO:
-  * import messages from util file
-  * move isCoordinateValid to util file
-  * normalize code / naming conventions
   * enable difficulty settings (size of board?, cpu makes wild guess every time)
-  // * add instructions option/prompt at game initialization
-  // * also make instructions available via 'help' command at any time via commandCenter
-  * fix repeated replace()'s in Player.js ==> board
-  * add hints to instructions about abbreviations
-  * render board on first ship placement to give user visual cue of game
-  * make status updates reflective of who is winning
-  * make board look more like a grid, get rid of commas
-* */
+  * add more messages for hits and misses and randomize
+  * make AI smarter
+**/
 
+clear(); // clears terminal before rendering for cleaner presentation
 
-/**
- * ASCII ART!
-*/
-
-clear();
+/* ASCII ART! */
 console.log(
     chalk.cyan(
         figlet.textSync('Battleship CLI', {
@@ -49,10 +40,7 @@ console.log(
     )
 );
 
-/**
- * GAME PROMPTS:
-*/
-
+/* GAME PROMPTS: */
 function initializeGame(callback) {
     const questions = [
         {
@@ -64,17 +52,64 @@ function initializeGame(callback) {
                     return true;
                 });
             }
-        },
-        {
-            type: 'list',
-            name: 'options',
-            message: ' Would you like to see instructions?',
-            choices: [' No thanks, let\'s play!', ' Yes, please' ],
-            default: 0
         }
     ];
 
     inquirer.prompt(questions).then(callback);
+}
+
+function menu(itr = 0) {
+    const WELCOME = ' Welcome to Battleship CLI!';
+    const NOTE = chalk.dim(' (Note: if your terminal does not support Emojis, please turn off Emoji support in settings)');
+    const MENU = "Battleship CLI Menu:";
+    const MESSAGE = itr !== 0 ? MENU : WELCOME + NOTE;
+
+    const questions = [
+        {
+            type: 'list',
+            name: 'selection',
+            message: MESSAGE,
+            choices: [' Let\'s Play!', ' See Instructions', ' Settings', ' Exit'],
+            default: 0
+        },
+        {
+            type: 'list',
+            name: 'emoji',
+            message: ' Enable Emoji Support:',
+            choices: [' Yes', ' No'],
+            default: 0
+        },
+    ];
+
+    inquirer.prompt(questions[0]).then(__menu => {
+        switch (__menu.selection) {
+            case ' See Instructions':
+                console.log(INSTRUCTIONS)
+                __continue(() => {
+                    menu(1);
+                });
+                break;
+            case ' Settings':
+                inquirer.prompt(questions[1]).then(option => {
+                    if (option.emoji === ' Yes') {
+                        process.env.EMOJI = true;
+                    } else {
+                        process.env.EMOJI = false;
+                    }
+                    __continue(() => {
+                        menu(1);
+                    });
+                });
+                break;
+            case ' Exit':
+                console.log('\n\nGoodbye...\n\n');
+                process.exit();
+                break;
+            default:
+                game.populateP1Ships();
+                configureP1Ships(P1_SHIPS);
+        }
+    });
 }
 
 function configureP1Ships(ships) {
@@ -86,7 +121,7 @@ function configureP1Ships(ships) {
     const INSTRUCTION =
     ` Ships remaining [type, size]: ${chalk.dim(JSON.stringify(ships).replace(/"/g, "'"))}` +
     (ships.length === 5 ? '\n   Use coordinates A1-J10 and left, right, up or down\n' : '\n') +
-    `   Place a ship! ${chalk.dim(' e.g. cruiser b3 right')}`;
+    `   Place a ship! ${chalk.dim('e.g. cruiser b3 right')}`;
 
     const question = [
         {
@@ -95,10 +130,10 @@ function configureP1Ships(ships) {
             message: INSTRUCTION,
             validate: value => {
                 return commandCenter(value, () => {
-                    const instructions = value.split(' ');
+                    let instructions = value.replace(/\s+/g, ' ').split(' ');
 
                     if (instructions.length !== 3) {
-                        return 'Please provide a ship, a starting coordinate, and a direction. e.g. \'Battleship, B5, Right\'';
+                        return 'Please provide a ship, a starting coordinate, and a direction. e.g. \'Battleship B5 Right\'';
                     }
 
                     var [ ship, coords, direction ] = instructions;
@@ -179,7 +214,7 @@ function takeTurn() {
         {
             type: 'input',
             name: 'coords',
-            message: ` Take a guess! Enter coordinates A1-J10: ${chalk.dim(' (e.g. B7)')}`,
+            message: ` Take a guess! Enter coordinates A1-J10: ${chalk.dim('(e.g. B7)')}`,
             validate: value => {
                 return commandCenter(value, () => {
                     if (isCoordinateValid(value)) {
@@ -232,10 +267,7 @@ function gameOver() {
     });
 }
 
-/**
- * UTILITY FUNCTIONS:
-*/
-
+/* UTILITY FUNCTIONS: */
 function commandCenter(value, validations) {
     switch (value) {
         case 'help':
@@ -270,19 +302,7 @@ function __continue(callback) {
     inquirer.prompt(question).then(callback);
 }
 
-/**
- * EXECUTE PROGRAM:
-*/
-
-initializeGame(answer => {
-    if (answer.options === ' Yes, please') {
-        console.log(INSTRUCTIONS)
-        __continue(() => {
-            game.populateP1Ships();
-            configureP1Ships(P1_SHIPS);
-        });
-    } else {
-        game.populateP1Ships();
-        configureP1Ships(P1_SHIPS);
-    }
-});
+/* EXECUTE PROGRAM: */
+// initializeGame(() => {
+    menu();
+// });

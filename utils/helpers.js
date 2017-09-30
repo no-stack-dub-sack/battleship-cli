@@ -16,7 +16,7 @@ function isCoordinateValid(coords) {
         !/[1-9]+/.test(col) ||
         row > 10 ||
         col > 10 ||
-        col < 1  ||
+        row < 1  ||
         col < 1  ) {
         return false;
     }
@@ -24,6 +24,17 @@ function isCoordinateValid(coords) {
 }
 
 function replacify(board) {
+    if (process.env.EMOJI !== 'false') {
+        return board
+            .slice(1, -1)
+            .replace(/\],/g, ']\n')
+            .replace(/"/g, '\'')
+            .replace(/\s\s\s/g, ' 🌊 ')
+            .replace(/X/g, ' 💥 ')
+            .replace(/O/g, ' ❌ ')
+            .replace(/BTL|CAR|SUB|CRU|DST/g, ' 🚤 ')
+    }
+
     return board
         .slice(1, -1)
         .replace(/\],/g, ']\n')
