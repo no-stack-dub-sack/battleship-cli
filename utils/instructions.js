@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 
 const INSTRUCTIONS = `
-Type ${chalk.red('help')} at any time to show these instructions.
+Type ${chalk.red('help')} and hit return at any time to show these instructions.
 
 ${chalk.bold('Other helpful commands:')}
 - Type ${chalk.keyword('orange')('show board')} at any time to see your own board including ship configuration, ships hit, and misses.
