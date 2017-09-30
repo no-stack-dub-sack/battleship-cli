@@ -23,6 +23,7 @@ const P1_SHIPS = [
 
 /** TODO:
   * enable difficulty settings (size of board?, cpu makes wild guess every time)
+  * fux istructions now that emoji shit been added
   * add more messages for hits and misses and randomize
   * make AI smarter
 **/
@@ -41,28 +42,11 @@ console.log(
 );
 
 /* GAME PROMPTS: */
-function initializeGame(callback) {
-    const questions = [
-        {
-            type: 'input',
-            name: 'ready',
-            message: ' Welcome to Battleship CLI! Press enter to continue.',
-            validate: value => {
-                return commandCenter(value, () => {
-                    return true;
-                });
-            }
-        }
-    ];
-
-    inquirer.prompt(questions).then(callback);
-}
-
-function menu(itr = 0) {
+function menu(itr) {
     const WELCOME = ' Welcome to Battleship CLI!';
     const NOTE = chalk.dim(' (Note: if your terminal does not support Emojis, please turn off Emoji support in settings)');
-    const MENU = "Battleship CLI Menu:";
-    const MESSAGE = itr !== 0 ? MENU : WELCOME + NOTE;
+    const MENU = ' Battleship CLI Menu:';
+    const MESSAGE = itr === 0 ? MENU : WELCOME + NOTE;
 
     const questions = [
         {
@@ -78,16 +62,14 @@ function menu(itr = 0) {
             message: ' Enable Emoji Support:',
             choices: [' Yes', ' No'],
             default: 0
-        },
+        }
     ];
 
     inquirer.prompt(questions[0]).then(__menu => {
         switch (__menu.selection) {
             case ' See Instructions':
                 console.log(INSTRUCTIONS)
-                __continue(() => {
-                    menu(1);
-                });
+                menu(1);
                 break;
             case ' Settings':
                 inquirer.prompt(questions[1]).then(option => {
@@ -96,9 +78,7 @@ function menu(itr = 0) {
                     } else {
                         process.env.EMOJI = false;
                     }
-                    __continue(() => {
-                        menu(1);
-                    });
+                    menu(1);
                 });
                 break;
             case ' Exit':
@@ -113,7 +93,6 @@ function menu(itr = 0) {
 }
 
 function configureP1Ships(ships) {
-
     if (ships.length === 5) {
         console.log('\n' + game.playerOne.board + HELPER);
     }
@@ -285,24 +264,5 @@ function commandCenter(value, validations) {
     }
 }
 
-function __continue(callback) {
-    const question = [
-        {
-            type: 'input',
-            name: 'continue',
-            message: ' Press enter to continue',
-            validate: value => {
-                return commandCenter(value, () => {
-                    return true;
-                });
-            }
-        }
-    ];
-
-    inquirer.prompt(question).then(callback);
-}
-
 /* EXECUTE PROGRAM: */
-// initializeGame(() => {
-    menu();
-// });
+menu();
