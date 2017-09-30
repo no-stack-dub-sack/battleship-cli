@@ -1,20 +1,16 @@
 {
   "name": "battleship-cli",
   "version": "1.0.0",
-  "description": "\"A Battleship CLI game, built with JavaScript\"",
+  "description": "A Battleship CLI game, built with JavaScript",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Peter A. Weinberg <pweinberg633@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^2.1.0",
     "clear": "^0.0.1",
     "clui": "^0.3.6",
     "figlet": "^1.2.0",
-    "inquirer": "^3.3.0",
-    "keypress": "^0.2.1"
+    "inquirer": "^3.3.0"
   },
   "bin": {
     "battleship": "./index.js"

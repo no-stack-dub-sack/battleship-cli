@@ -26,7 +26,7 @@ const P1_SHIPS = [
   * enable difficulty settings (size of board?, cpu makes wild guess every time)
   // * add instructions option/prompt at game initialization
   // * also make instructions available via 'help' command at any time via commandCenter
-  * fix repeated replace()'s in Player.js ==> showBoard
+  * fix repeated replace()'s in Player.js ==> board
   * add hints to instructions about abbreviations
   * render board on first ship placement to give user visual cue of game
   * make status updates reflective of who is winning
@@ -80,7 +80,7 @@ function initializeGame(callback) {
 function configureP1Ships(ships) {
 
     if (ships.length === 5) {
-        console.log('\n' + game.playerOne.showBoard() + HELPER);
+        console.log('\n' + game.playerOne.board + HELPER);
     }
 
     const INSTRUCTION =
@@ -91,7 +91,7 @@ function configureP1Ships(ships) {
     const question = [
         {
             type: 'input',
-            name: 'placeShip',
+            name: 'configureShip',
             message: INSTRUCTION,
             validate: value => {
                 return commandCenter(value, () => {
@@ -104,8 +104,8 @@ function configureP1Ships(ships) {
                     var [ ship, coords, direction ] = instructions;
 
                     // if ship placement is successful,
-                    // playerOne.placeShip returns undefined
-                    var message = game.playerOne.placeShip(
+                    // playerOne.configureShip returns undefined
+                    var message = game.playerOne.configureShip(
                         ship.toLowerCase(),
                         coords.toLowerCase(),
                         direction.toLowerCase()
@@ -118,7 +118,7 @@ function configureP1Ships(ships) {
     ];
     // recurse until all ships are placed
     inquirer.prompt(question).then(() => {
-        if (game.readyPlayerOne()) {
+        if (ships.length === 1) {
             game.setInitialState();
             startGame();
         } else {
@@ -241,7 +241,7 @@ function commandCenter(value, validations) {
         case 'help':
             return INSTRUCTIONS;
         case 'show board':
-            return game.playerOne.showBoard();
+            return game.playerOne.board;
         case 'show score':
             return game.status;
         case 'q':
