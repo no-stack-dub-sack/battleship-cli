@@ -1,10 +1,8 @@
-const { LAST_COORD } = process.env;
-
 module.exports = {
     INVALID: {
         DIRECTION: 'Please enter a valid direction! e.g. \'Right\', \'Left\', \'Up\', \'Down\', or \'R\', \'L\', \'U\', \'D\'\n',
         SHIP: 'Please enter a valid ship: \'Battleship\', \'Crusier\', \'Carrier\', \'Submarine\', or \'Destroyer\'',
-        COORDINATE: `Please enter valid starting coordinate! i.e. A1-${LAST_COORD}\n`,
+        COORDINATE: () => `Please enter a valid starting coordinate! i.e. A1-${process.env.LAST_COORD}\n`,
         INSTRUCTIONS: 'Please provide a ship, a starting coordinate, and a direction. e.g. \'Battleship, B5, Right\''
     },
     P1: {
@@ -22,6 +20,6 @@ module.exports = {
         return `You have already placed your ${ship.type.slice(0, 1).toUpperCase() + ship.type.slice(1)}!\n`
     },
     outOfBounds: function(failureCoord) {
-        return `${failureCoord} is either occupied or out of bounds!\nPlease enter valid, unoccupied coordinates, i.e. A1-${LAST_COORD}\n`;
+        return `${failureCoord} is either occupied or out of bounds! Please enter valid, unoccupied coordinates, i.e. A1-${process.env.LAST_COORD}\n`;
     }
 }

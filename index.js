@@ -11,7 +11,7 @@ const game     = new Game();
 require('dotenv').config()
 
 const { HELPER, INSTRUCTIONS } = require('./utils/instructions');
-const { isCoordinateValid }    = require('./utils/helpers');
+const { isCoordinateValid }    = require('./utils/validateCoords');
 
 const P1_SHIPS = [
     'Cruiser, 3',
@@ -28,6 +28,7 @@ const P1_SHIPS = [
   * make sure that CPU ai works with new board size options
   * add more messages for hits and misses and randomize
   * make AI smarter
+  * show board when done placing
 **/
 
 /* Clears Term & ASCII ART! */
@@ -80,7 +81,7 @@ function mainMenu(itr = 0) {
                 break;
             default:
                 if (game.cpu.ownBoard === null) {
-                    game.drawBoard(10);
+                    game.drawBoards(10);
                 }
                 game.populateP1Ships();
                 configureP1Ships(P1_SHIPS);
@@ -94,7 +95,8 @@ function settingsMenu() {
             type: 'list',
             name: 'selection',
             message: ' Settings:',
-            choices: [ ' Emoji Board', ' Board Size', ' Main Menu']
+            choices: [ ' Emoji Board', ' Board Size', ' Main Menu'],
+            default: 2
         },
         {
             type: 'list',
@@ -128,19 +130,19 @@ function settingsMenu() {
                 inquirer.prompt(questions[2]).then(option => {
                     switch (option.boardSize) {
                         case ' 12x12':
-                            game.drawBoard(12);
+                            game.drawBoards(12);
                             process.env.LAST_COORD = 'L12'
                             break;
                         case ' 15x15':
-                            game.drawBoard(15);
+                            game.drawBoards(15);
                             process.env.LAST_COORD = 'O15'
                             break;
                         case ' 20x20':
-                            game.drawBoard(20);
+                            game.drawBoards(20);
                             process.env.LAST_COORD = 'T20'
                             break;
                         default:
-                            game.drawBoard(10);
+                            game.drawBoards(10);
                     }
                     clearTerm();
                     settingsMenu();
@@ -290,23 +292,33 @@ function takeTurn() {
 function gameOver() {
     const question = [
         {
-            type: 'confirm',
+            type: 'list',
             name: 'newGame',
-            message: game.message
+            message: game.message,
+            choices: [' Yes!', ' Main Menu', ' Exit'],
+            default: 0
         }
     ];
 
     inquirer.prompt(question).then(answer => {
-        if (answer.newGame) {
-            console.log('   Ready? Here we go again...');
-            setTimeout(() => {
-                game.reset();
-                game.populateP1Ships();
-                configureP1Ships(P1_SHIPS);
-            }, 1000);
-        } else {
-            console.log('\n\nThanks for playing Battleship CLI! Goodbye!\n\n');
-            process.exit();
+        switch (answer.newGame) {
+            case ' Yes!':
+                console.log('   Ready? Here we go again...');
+                setTimeout(() => {
+                    game.reset();
+                    game.populateP1Ships();
+                    configureP1Ships(P1_SHIPS);
+                }, 1000);
+                break;
+            case ' Main Menu':
+                clearTerm();
+                mainMenu(1);
+                game = new Game();
+                process.env.BOARD_SIZE = 10;
+                break;
+            default:
+                console.log('\n\nThanks for playing Battleship CLI! Goodbye!\n\n');
+                process.exit();
         }
     });
 }
