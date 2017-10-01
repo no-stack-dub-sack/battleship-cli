@@ -32,7 +32,7 @@ ${chalk.bold('Legend:')}
 - Destroyer (DST), 2 spaces
 - Submarine (SUB), 3 spaces
 - A hit looks like this: ${chalk.bgKeyword('orange').red.bold(' X ')}
-- A miss looks like this: ${chalk.bgKeyword('blue').cyan.bold(' O ')}
+- A miss looks like this: ${chalk.bgKeyword('blue').cyan.bold(' 0 ')}
 
 ${chalk.bold('Hint:')}
 - When placing ships, you can also use abbreviations to make your life easier!

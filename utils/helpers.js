@@ -11,11 +11,12 @@ function isCoordinateValid(coords) {
     if (!coords) {
         return false;
     }
+    var threshold = Number(process.env.BOARD_SIZE);
     const { row, col } = parseCoordinates(coords);
     if (coords.length > 3   ||
         !/[1-9]+/.test(col) ||
-        row > 10 ||
-        col > 10 ||
+        row > threshold ||
+        col > threshold ||
         row < 1  ||
         col < 1  ) {
         return false;
@@ -31,7 +32,7 @@ function replacify(board) {
             .replace(/"/g, '\'')
             .replace(/\s\s\s/g, ' 🌊 ')
             .replace(/X/g, ' 💥 ')
-            .replace(/O/g, ' ❌ ')
+            .replace(/\s0\s/g, ' ❌ ')
             .replace(/BTL|CAR|SUB|CRU|DST/g, ' 🚤 ')
     }
 
@@ -40,7 +41,7 @@ function replacify(board) {
         .replace(/\],/g, ']\n')
         .replace(/"/g, '\'')
         .replace(/X/g, chalk.bgKeyword('orange').red.bold(' X '))
-        .replace(/O/g, chalk.bgKeyword('blue').cyan.bold(' O '))
+        .replace(/0/g, chalk.bgKeyword('blue').cyan.bold(' 0 '))
 }
 
 const SHIP_KEY = {

@@ -28,66 +28,122 @@ const P1_SHIPS = [
   * make AI smarter
 **/
 
-clear(); // clears terminal before rendering for cleaner presentation
-
-/* ASCII ART! */
-console.log(
-    chalk.cyan(
-        figlet.textSync('Battleship CLI', {
-            font: 'graffiti',
-            horizontalLayout: 'full'
-        }),
-        '\n'
-    )
-);
+/* Clears Term & ASCII ART! */
+function clearTerm() {
+    clear();
+    console.log(
+        chalk.cyan(
+            figlet.textSync('Battleship CLI', {
+                font: 'graffiti',
+                horizontalLayout: 'full'
+            }),
+            '\n'
+        )
+    );
+}
 
 /* GAME PROMPTS: */
-function menu(itr) {
+function mainMenu(itr = 0) {
     const WELCOME = ' Welcome to Battleship CLI!';
     const NOTE = chalk.dim(' (Note: if your terminal does not support Emojis, please turn off Emoji support in settings)');
     const MENU = ' Battleship CLI Menu:';
-    const MESSAGE = itr === 0 ? MENU : WELCOME + NOTE;
+    const MESSAGE = itr ? MENU : WELCOME + NOTE;
 
-    const questions = [
+    const question = [
         {
             type: 'list',
             name: 'selection',
             message: MESSAGE,
             choices: [' Let\'s Play!', ' See Instructions', ' Settings', ' Exit'],
             default: 0
-        },
-        {
-            type: 'list',
-            name: 'emoji',
-            message: ' Enable Emoji Support:',
-            choices: [' Yes', ' No'],
-            default: 0
         }
     ];
 
-    inquirer.prompt(questions[0]).then(__menu => {
-        switch (__menu.selection) {
+    inquirer.prompt(question).then(menu => {
+        switch (menu.selection) {
             case ' See Instructions':
                 console.log(INSTRUCTIONS)
-                menu(1);
+                __continue(() => {
+                    clearTerm();
+                    mainMenu(1);
+                });
                 break;
             case ' Settings':
-                inquirer.prompt(questions[1]).then(option => {
-                    if (option.emoji === ' Yes') {
-                        process.env.EMOJI = true;
-                    } else {
-                        process.env.EMOJI = false;
-                    }
-                    menu(1);
-                });
+                clearTerm();
+                settingsMenu();
                 break;
             case ' Exit':
                 console.log('\n\nGoodbye...\n\n');
                 process.exit();
                 break;
             default:
+                if (game.cpu.ownBoard === null) {
+                    game.drawBoard(10);
+                }
                 game.populateP1Ships();
                 configureP1Ships(P1_SHIPS);
+        }
+    });
+}
+
+function settingsMenu() {
+    const questions = [
+        {
+            type: 'list',
+            name: 'selection',
+            message: ' Settings:',
+            choices: [ ' Emoji Board', ' Board Size', ' Main Menu']
+        },
+        {
+            type: 'list',
+            name: 'emoji',
+            message: ' Emoji Board:',
+            choices: [' On', ' Off'],
+            default: 0
+        },
+        {
+            type: 'list',
+            name: 'boardSize',
+            message: ' Board Size:',
+            choices: [' 10x10', ' 12x12', ' 15x15', ' 20x20'],
+            default: 0
+        },
+    ];
+    inquirer.prompt(questions[0]).then(menu => {
+        switch (menu.selection) {
+            case ' Emoji Board':
+                inquirer.prompt(questions[1]).then(option => {
+                    if (option.emoji === ' Yes') {
+                        process.env.EMOJI = true;
+                    } else {
+                        process.env.EMOJI = false;
+                    }
+                    clearTerm();
+                    settingsMenu();
+                });
+                break;
+            case ' Board Size':
+                inquirer.prompt(questions[2]).then(option => {
+                    switch (option.boardSize) {
+                        case ' 12x12':
+                            game.drawBoard(12);
+                            break;
+                        case ' 15x15':
+                            game.drawBoard(15);
+                            break;
+                        case ' 20x20':
+                            game.drawBoard(20);
+                            break;
+                        default:
+                            game.drawBoard(10);
+                    }
+                    clearTerm();
+                    settingsMenu();
+                });
+                break;
+            default:
+                clearTerm();
+                mainMenu(1);
         }
     });
 }
@@ -109,13 +165,13 @@ function configureP1Ships(ships) {
             message: INSTRUCTION,
             validate: value => {
                 return commandCenter(value, () => {
-                    let instructions = value.replace(/\s+/g, ' ').split(' ');
+                    const directive = value.replace(/\s+/g, ' ').split(' ');
 
-                    if (instructions.length !== 3) {
+                    if (directive.length !== 3) {
                         return 'Please provide a ship, a starting coordinate, and a direction. e.g. \'Battleship B5 Right\'';
                     }
 
-                    var [ ship, coords, direction ] = instructions;
+                    var [ ship, coords, direction ] = directive;
 
                     // if ship placement is successful,
                     // playerOne.configureShip returns undefined
@@ -264,5 +320,23 @@ function commandCenter(value, validations) {
     }
 }
 
+function __continue(callback) {
+    const question = [
+        {
+            type: 'input',
+            name: 'continue',
+            message: ' Press enter to continue',
+            validate: value => {
+                return commandCenter(value, () => {
+                    return true;
+                });
+            }
+        }
+    ];
+
+    inquirer.prompt(question).then(callback);
+}
+
 /* EXECUTE PROGRAM: */
-menu();
+clearTerm();
+mainMenu();
