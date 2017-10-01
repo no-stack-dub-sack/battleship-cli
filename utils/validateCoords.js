@@ -5,11 +5,10 @@ function parseCoordinates(coords) {
     }
 }
 
-function isCoordinateValid(coords) {
+function isCoordinateValid(coords, threshold) {
     if (!coords) {
         return false;
     }
-    var threshold = Number(process.env.BOARD_SIZE);
     const { row, col } = parseCoordinates(coords);
     if (coords.length > 3   ||
         !/[1-9]+/.test(col) ||

@@ -280,7 +280,7 @@ function takeTurn() {
             message: ` Take a guess! Enter coordinates A1-${LAST_COORD}: ${chalk.dim('(e.g. B7)')}`,
             validate: value => {
                 return commandCenter(value, () => {
-                    if (isCoordinateValid(value)) {
+                    if (isCoordinateValid(value, game.boardSize)) {
                         return true;
                     } else {
                         return "Please enter valid coordinates"
@@ -330,7 +330,6 @@ function gameOver() {
             case ' Main Menu':
                 clearTerm(mainMenu);
                 game = new Game();
-                process.env.BOARD_SIZE = 10;
                 break;
             default:
                 console.log('\n\nThanks for playing Battleship CLI! Goodbye!\n\n');
