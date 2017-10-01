@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const clear    = require('clear');
 const Game     = require('./lib/Game');
 const chalk    = require('chalk');
 const figlet   = require('figlet');
@@ -32,8 +31,8 @@ const P1_SHIPS = [
 **/
 
 /* Clears Term & ASCII ART! */
-function clearTerm() {
-    clear();
+function clearTerm(menuCb) {
+    process.stdout.write('\x1Bc');
     console.log(
         chalk.cyan(
             figlet.textSync('Battleship CLI', {
@@ -43,14 +42,15 @@ function clearTerm() {
             '\n'
         )
     );
+    menuCb();
 }
 
 /* GAME PROMPTS: */
-function mainMenu(itr = 0) {
+function mainMenu(itr = 1) {
     const WELCOME = ' Welcome to Battleship CLI!';
     const NOTE = chalk.dim(' (Note: if your terminal does not support Emojis, please turn off Emoji support in settings)');
     const MENU = ' Battleship CLI Menu:';
-    const MESSAGE = itr ? MENU : WELCOME + NOTE;
+    const MESSAGE = !itr ? MENU : WELCOME + NOTE;
 
     const question = [
         {
@@ -67,13 +67,11 @@ function mainMenu(itr = 0) {
             case ' See Instructions':
                 console.log(INSTRUCTIONS)
                 __continue(() => {
-                    clearTerm();
-                    mainMenu(1);
+                    clearTerm(mainMenu);
                 });
                 break;
             case ' Settings':
-                clearTerm();
-                settingsMenu();
+                clearTerm(settingsMenu);
                 break;
             case ' Exit':
                 console.log('\n\nGoodbye...\n\n');
@@ -95,8 +93,8 @@ function settingsMenu() {
             type: 'list',
             name: 'selection',
             message: ' Settings:',
-            choices: [ ' Emoji Board', ' Board Size', ' Main Menu'],
-            default: 2
+            choices: [ ' Emoji Board', ' Board Size', ' Difficulty', ' Main Menu'],
+            default: 3
         },
         {
             type: 'list',
@@ -112,6 +110,13 @@ function settingsMenu() {
             choices: [' 10x10', ' 12x12', ' 15x15', ' 20x20'],
             default: 0
         },
+        {
+            type: 'list',
+            name: 'difficulty',
+            message: ' Difficulty:',
+            choices: [' Normal', ' Easy', ' Super Easy'],
+            default: 0
+        },
     ];
     inquirer.prompt(questions[0]).then(menu => {
         switch (menu.selection) {
@@ -122,8 +127,7 @@ function settingsMenu() {
                     } else {
                         process.env.EMOJI = false;
                     }
-                    clearTerm();
-                    settingsMenu();
+                    clearTerm(settingsMenu);
                 });
                 break;
             case ' Board Size':
@@ -144,13 +148,26 @@ function settingsMenu() {
                         default:
                             game.drawBoards(10);
                     }
-                    clearTerm();
-                    settingsMenu();
+                    clearTerm(settingsMenu);
+                });
+                break;
+            case ' Difficulty':
+                inquirer.prompt(questions[3]).then(option => {
+                    switch (option.boardSize) {
+                        case ' Super Easy':
+                            game.cpu.difficulty = 0;
+                            break;
+                        case ' Easy':
+                            game.cpu.difficulty = 1;
+                            break;
+                        default:
+                            game.cpu.difficulty = 2;
+                    }
+                    clearTerm(settingsMenu);
                 });
                 break;
             default:
-                clearTerm();
-                mainMenu(1);
+                clearTerm(mainMenu);
         }
     });
 }
@@ -311,8 +328,7 @@ function gameOver() {
                 }, 1000);
                 break;
             case ' Main Menu':
-                clearTerm();
-                mainMenu(1);
+                clearTerm(mainMenu);
                 game = new Game();
                 process.env.BOARD_SIZE = 10;
                 break;
@@ -359,5 +375,4 @@ function __continue(callback) {
 }
 
 /* EXECUTE PROGRAM: */
-clearTerm();
-mainMenu();
+clearTerm(mainMenu);
