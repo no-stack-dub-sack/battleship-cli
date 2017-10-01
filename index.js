@@ -24,6 +24,8 @@ const P1_SHIPS = [
 /** TODO:
   * enable difficulty settings (size of board?, cpu makes wild guess every time)
   * fux istructions now that emoji shit been added
+  * fix coordinate message to match board size
+  * make sure that CPU ai works with new board size options
   * add more messages for hits and misses and randomize
   * make AI smarter
 **/
@@ -127,12 +129,15 @@ function settingsMenu() {
                     switch (option.boardSize) {
                         case ' 12x12':
                             game.drawBoard(12);
+                            process.env.LAST_COORD = 'L12'
                             break;
                         case ' 15x15':
                             game.drawBoard(15);
+                            process.env.LAST_COORD = 'O15'
                             break;
                         case ' 20x20':
                             game.drawBoard(20);
+                            process.env.LAST_COORD = 'T20'
                             break;
                         default:
                             game.drawBoard(10);
@@ -153,9 +158,11 @@ function configureP1Ships(ships) {
         console.log('\n' + game.playerOne.board + HELPER);
     }
 
+    const { LAST_COORD } = process.env;
+
     const INSTRUCTION =
     ` Ships remaining [type, size]: ${chalk.dim(JSON.stringify(ships).replace(/"/g, "'"))}` +
-    (ships.length === 5 ? '\n   Use coordinates A1-J10 and left, right, up or down\n' : '\n') +
+    (ships.length === 5 ? `\n   Use coordinates A1-${LAST_COORD} and left, right, up or down\n` : '\n') +
     `   Place a ship! ${chalk.dim('e.g. cruiser b3 right')}`;
 
     const question = [
@@ -245,11 +252,13 @@ function takeTurn() {
         return gameOver();
     }
 
+    const { LAST_COORD } = process.env;
+
     const question = [
         {
             type: 'input',
             name: 'coords',
-            message: ` Take a guess! Enter coordinates A1-J10: ${chalk.dim('(e.g. B7)')}`,
+            message: ` Take a guess! Enter coordinates A1-${LAST_COORD}: ${chalk.dim('(e.g. B7)')}`,
             validate: value => {
                 return commandCenter(value, () => {
                     if (isCoordinateValid(value)) {

@@ -16,8 +16,8 @@ ${chalk.bold('How to win:')}
 
 ${chalk.bold('Gameplay:')}
 - To play, follow the prompts to configure your five ships in any pattern you'd like (diagonal placements are not allowed).
-- Valid configuration instructions include a ship name, a starting coordinate (A1-J10), and a direction (right, left, up or down).
-- For example: ${chalk.keyword('orange')('submarine e3 up')} or ${chalk.keyword('orange')('carrier j10 left')}. Ships cannot overlap, and you must stay within the bounds of the board.
+- Valid configuration instructions include a ship name, a starting coordinate (A1-J10 for default 10x10 board), and a direction (right, left, up or down).
+- For example: ${chalk.keyword('orange')('submarine e3 up')} or ${chalk.keyword('orange')('carrier j7 left')}. Ships cannot overlap, and you must stay within the bounds of the board.
 - Once both players have configured their ships, the race is on to sink your opponent's ships before they sink yours!
 - Fire torpedoes at your opponent's ships by guessing coordinates on the 10x10 board.
 - Rows are represented by the letters A-J, and columns with the numbers 1-10.

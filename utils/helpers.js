@@ -15,10 +15,10 @@ function isCoordinateValid(coords) {
     const { row, col } = parseCoordinates(coords);
     if (coords.length > 3   ||
         !/[1-9]+/.test(col) ||
-        row > threshold ||
-        col > threshold ||
-        row < 1  ||
-        col < 1  ) {
+        row > threshold     ||
+        col > threshold     ||
+        row < 1             ||
+        col < 1 ) {
         return false;
     }
     return true;
