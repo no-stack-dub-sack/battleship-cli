@@ -1,7 +1,7 @@
 function parseCoordinates(coords) {
     return {
         row: coords[0].toUpperCase().charCodeAt(0) - 64,
-        col: coords.slice(1)
+        col: Number(coords.slice(1))
     }
 }
 
