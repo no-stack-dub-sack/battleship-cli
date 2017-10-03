@@ -15,6 +15,7 @@ ${chalk.bold('Other helpful commands:')}
 ${chalk.bold('Settings:')}
 - ${chalk.red('NOTE:')} If your terminal does not support Emojis, please disable Emojis in the settings menu.
 - For a more challenging game, you can choose a larger board size.
+- You can also adjust the computer's skill level. 
 
 ${chalk.bold('How to win:')}
 - Each player has a battlefield represented by a 10x10 grid (default) on which they place 5 ships, hidden to their opponent.

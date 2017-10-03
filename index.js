@@ -21,17 +21,13 @@ const P1_SHIPS = [
 ];
 
 /** TODO:
-  * enable difficulty settings (size of board?, cpu makes wild guess every time)
-  * fux istructions now that emoji shit been added
-  * fix coordinate message to match board size
   * make sure that CPU ai works with new board size options
   * add more messages for hits and misses and randomize
   * make AI smarter
-  * show board when done placing
 **/
 
 /* Clears Term & ASCII ART! */
-function clearTerm(menuCb) {
+function clearTerm(menuCallback, init) {
     process.stdout.write('\x1Bc');
     console.log(
         chalk.cyan(
@@ -42,15 +38,16 @@ function clearTerm(menuCb) {
             '\n'
         )
     );
-    menuCb();
+
+    init ? menuCallback('init') : menuCallback();
 }
 
 /* GAME PROMPTS: */
-function mainMenu(itr = 1) {
+function mainMenu(init) {
     const WELCOME = ' Welcome to Battleship CLI!';
     const NOTE = chalk.dim(' (Note: if your terminal does not support Emojis, please turn off Emoji support in settings)');
     const MENU = ' Battleship CLI Menu:';
-    const MESSAGE = !itr ? MENU : WELCOME + NOTE;
+    const MESSAGE = !init ? MENU : WELCOME + NOTE;
 
     const question = [
         {
@@ -153,7 +150,7 @@ function settingsMenu() {
                 break;
             case ' Difficulty':
                 inquirer.prompt(questions[3]).then(option => {
-                    switch (option.boardSize) {
+                    switch (option.difficulty) {
                         case ' Super Easy':
                             game.cpu.difficulty = 0;
                             break;
@@ -215,6 +212,7 @@ function configureP1Ships(ships) {
     // recurse until all ships are placed
     inquirer.prompt(question).then(() => {
         if (ships.length === 1) {
+            console.log('\n' + game.playerOne.board + '\n');
             game.setInitialState();
             startGame();
         } else {
@@ -374,4 +372,4 @@ function __continue(callback) {
 }
 
 /* EXECUTE PROGRAM: */
-clearTerm(mainMenu);
+clearTerm(mainMenu, 'init');

@@ -32,6 +32,7 @@ _Type `**help**` and hit return at any time during gameplay to show these instru
 ### Settings:
 - __NOTE:__ If your terminal does not support Emojis, please disable Emojis in the settings menu.
 - For a more challenging game, you can choose a larger board size.
+- You can also adjust the computer's skill level. 
 
 ### How to win:
 - Each player has a battlefield represented by a 10x10 grid on which they place 5 ships, hidden to their opponent.

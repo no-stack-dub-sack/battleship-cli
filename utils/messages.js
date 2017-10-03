@@ -15,6 +15,7 @@ module.exports = {
         HIT_SHIP: 'Uh oh. The computer hit your ',
         SUNK_SHIP: 'Ha ha! The computer sunk your ',
         MISSED: 'The computer missed. Hard to believe.\n',
+        LOST_TURN: 'Wow, the computer is wasting torpedoes, it already guessed that space!',
     },
     duplicatePlacement: function(ship) {
         return `You have already placed your ${ship.type.slice(0, 1).toUpperCase() + ship.type.slice(1)}!\n`
