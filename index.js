@@ -111,7 +111,7 @@ function settingsMenu() {
             type: 'list',
             name: 'difficulty',
             message: ' Difficulty:',
-            choices: [' Normal', ' Easy', ' Super Easy'],
+            choices: [' Medium (default)', ' Hard', ' Easy', ' Super Easy'],
             default: 0
         },
     ];
@@ -156,6 +156,9 @@ function settingsMenu() {
                             break;
                         case ' Easy':
                             game.cpu.difficulty = 1;
+                            break;
+                        case ' Hard':
+                            game.cpu.difficulty = 3;
                             break;
                         default:
                             game.cpu.difficulty = 2;
