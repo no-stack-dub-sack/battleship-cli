@@ -229,6 +229,7 @@ function configureP1Ships(ships) {
                     );
                 }
             }
+            console.log('\n' + game.playerOne.board + '\n'); 
             configureP1Ships(ships);
         }
     })

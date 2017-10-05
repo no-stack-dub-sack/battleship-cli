@@ -22,5 +22,6 @@ module.exports = {
     },
     outOfBounds: function(failureCoord) {
         return `${failureCoord} is either occupied or out of bounds! Please enter valid, unoccupied coordinates, i.e. A1-${process.env.LAST_COORD}\n`;
-    }
+    },
+    BUG_MESSAGE: 'Hey! You discovered a bug. Please take a screenshot of your last several moves and open an issue here: https://github.com/no-stack-dub-sack/battleship-cli/issues/new. Thanks!'
 }
