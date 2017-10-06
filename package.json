@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Peter A. Weinberg <pweinberg633@gmail.com>",
   "license": "MIT",
+  "repository": "no-stack-dub-sack/battleship-cli",
   "scripts": {
     "test": "jest"
   },

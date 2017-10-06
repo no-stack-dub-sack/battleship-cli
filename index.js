@@ -188,7 +188,7 @@ function configureP1Ships(ships) {
                     const directive = value.replace(/\s+/g, ' ').split(' ');
 
                     if (directive.length !== 3) {
-                        return `Please provide a ship, a starting coordinate, and a direction. e.g. ${chalk.keyowrd('salmon')('Battleship B5 Right')}`;
+                        return `Please provide a ship, a starting coordinate, and a direction. e.g. ${chalk.keyword('salmon')('Battleship B5 Right')}`;
                     }
 
                     var [ ship, coords, direction ] = directive;
