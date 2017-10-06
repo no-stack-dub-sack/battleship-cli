@@ -1,0 +1,2 @@
+# tests do not need to be included in the package
+lib/__tests__
