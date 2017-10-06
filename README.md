@@ -1,5 +1,3 @@
-![image](https://user-images.githubusercontent.com/18563015/31041161-ea2b1434-a55e-11e7-8612-4a8ff3fca302.png)
-
 # Battleship-Cli
 A super cool, fun, and easy to play command line implementation of Battleship, the classic 2-player guessing game. Built in JavaScript, `battleship-cli` is a simple NodeJS program, with CLI interface enabled by __[InquirerJS](https://github.com/SBoudrias/Inquirer.js/)__, and colorized by __[chalk](https://github.com/chalk/chalk)__.
 
@@ -18,11 +16,12 @@ A super cool, fun, and easy to play command line implementation of Battleship, t
   - run `npm install` or `yarn install` to install dependencies
   - run `npm i -g` to make the module available globally
 - __To play:__
-  - Simply run `battleship` from any directory
+  - In your favorite terminal, simply run the `battleship` command from any directory
+  - For the best experience use a terminal that has full color and emoji support
 
 ## Battleship-CLI Instructions
 
-_Type `**help**` and hit return at any time during gameplay to show these instructions._
+_Type `help` and hit return at any time during gameplay to show these instructions._
 
 ### Other helpful commands:
 - Type `show board` at any time to see your own board including ship configuration, ships hit, and misses.
@@ -66,19 +65,22 @@ _Type `**help**` and hit return at any time during gameplay to show these instru
 - A miss looks like ❌ or ` 0 ` (depending on Emoji support)  
 
 ## Screenshots:
-### Intro Screen
-![image](https://user-images.githubusercontent.com/18563015/31259206-02b40d0e-aa13-11e7-9159-a97ed6afb2a7.png)
+### Placing Ships
+![image](https://user-images.githubusercontent.com/18563015/31262288-f97a4afe-aa27-11e7-8e46-a3f2a7a7ca20.png)
 
 ### 20x20 Board
 ![image](https://user-images.githubusercontent.com/18563015/31259279-9538284a-aa13-11e7-9c99-f1b95a7db178.png)
 
 ### Gameplay (10x10 Emoji Board)
-![image](https://user-images.githubusercontent.com/18563015/31259509-37d4542e-aa15-11e7-8d1b-2d790214c7a5.png)
+![image](https://user-images.githubusercontent.com/18563015/31262374-859f2176-aa28-11e7-807e-bab3c99f828b.png)
 
 ### Gameplay (12x12 Plain Board)
-![image](https://user-images.githubusercontent.com/18563015/31259602-f6d86a22-aa15-11e7-9e28-6ee7328e13dc.png)
+![image](https://user-images.githubusercontent.com/18563015/31262710-0b0b995a-aa2b-11e7-9dd2-9a40b417b9f5.png)
 
 ### Helpful Validations
 ![image](https://user-images.githubusercontent.com/18563015/31261966-d2a2a252-aa25-11e7-8b35-31e89decf972.png)
 ![image](https://user-images.githubusercontent.com/18563015/31262035-3cd1d3b4-aa26-11e7-92b5-526acebaf46e.png)
 ![image](https://user-images.githubusercontent.com/18563015/31259657-6cbbbed8-aa16-11e7-9f30-085b48ad5ed9.png)
+
+### In-Game Instructions
+![image](https://user-images.githubusercontent.com/18563015/31262433-e758e096-aa28-11e7-8467-f2c2462bff8d.png)

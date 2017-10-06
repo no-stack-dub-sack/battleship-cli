@@ -109,7 +109,7 @@ function settingsMenu() {
             type: 'list',
             name: 'difficulty',
             message: ' Difficulty:',
-            choices: [' Medium (default)', ' Hard', ' Easy', ' Super Easy'],
+            choices: [' Hard (default)', ' Medium', ' Easy', ' Super Easy'],
             default: 0
         },
     ];
@@ -155,11 +155,11 @@ function settingsMenu() {
                         case ' Easy':
                             game.cpu.difficulty = 1;
                             break;
-                        case ' Hard':
-                            game.cpu.difficulty = 3;
+                        case ' Medium':
+                            game.cpu.difficulty = 2;
                             break;
                         default:
-                            game.cpu.difficulty = 2;
+                            game.cpu.difficulty = 3;
                     }
                     clearTerm(settingsMenu);
                 });
