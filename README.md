@@ -3,7 +3,7 @@
 # Battleship-Cli
 A super cool, fun, and easy to play command line implementation of Battleship, the classic 2-player guessing game. Built in JavaScript, `battleship-cli` is a simple NodeJS program, with CLI interface enabled by __[InquirerJS](https://github.com/SBoudrias/Inquirer.js/)__, and colorized by __[chalk](https://github.com/chalk/chalk)__.
 
-![image](http://res.cloudinary.com/dmvcjmjkn/image/upload/v1506736894/battleship_demo_v0jdqj.gif)
+![image](http://res.cloudinary.com/dmvcjmjkn/image/upload/v1507261203/battleship_demo_o2qgml.gif)
 
 ## Requirements:
 - Node
@@ -32,7 +32,7 @@ _Type `**help**` and hit return at any time during gameplay to show these instru
 ### Settings:
 - __NOTE:__ If your terminal does not support Emojis, please disable Emojis in the settings menu.
 - For a more challenging game, you can choose a larger board size.
-- You can also adjust the computer's skill level. 
+- You can also adjust the computer's skill level.
 
 ### How to win:
 - Each player has a battlefield represented by a 10x10 grid on which they place 5 ships, hidden to their opponent.
@@ -64,3 +64,21 @@ _Type `**help**` and hit return at any time during gameplay to show these instru
 - Submarine (SUB), 3 spaces
 - A hit looks like 💥 or ` X ` (depending on Emoji support)
 - A miss looks like ❌ or ` 0 ` (depending on Emoji support)  
+
+## Screenshots:
+### Intro Screen
+![image](https://user-images.githubusercontent.com/18563015/31259206-02b40d0e-aa13-11e7-9159-a97ed6afb2a7.png)
+
+### 20x20 Board
+![image](https://user-images.githubusercontent.com/18563015/31259279-9538284a-aa13-11e7-9c99-f1b95a7db178.png)
+
+### Gameplay (10x10 Emoji Board)
+![image](https://user-images.githubusercontent.com/18563015/31259509-37d4542e-aa15-11e7-8d1b-2d790214c7a5.png)
+
+### Gameplay (12x12 Plain Board)
+![image](https://user-images.githubusercontent.com/18563015/31259602-f6d86a22-aa15-11e7-9e28-6ee7328e13dc.png)
+
+### Helpful Validations
+![image](https://user-images.githubusercontent.com/18563015/31261966-d2a2a252-aa25-11e7-8b35-31e89decf972.png)
+![image](https://user-images.githubusercontent.com/18563015/31262035-3cd1d3b4-aa26-11e7-92b5-526acebaf46e.png)
+![image](https://user-images.githubusercontent.com/18563015/31259657-6cbbbed8-aa16-11e7-9f30-085b48ad5ed9.png)

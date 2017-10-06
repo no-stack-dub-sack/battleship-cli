@@ -35,7 +35,7 @@ module.exports = {
         return board;
     },
     replacify: function(board) {
-        if (process.env.EMOJI !== 'false') {
+        if (require('../index').emojiBoard) {
             return board
                 .slice(1, -1)
                 .replace(/\],/g, ']\n')
@@ -52,5 +52,8 @@ module.exports = {
             .replace(/"/g, '\'')
             .replace(/\sX\s/g, chalk.bgKeyword('orange').red.bold(' X '))
             .replace(/\s0\s/g, chalk.bgKeyword('blue').cyan.bold(' 0 '));
+    },
+    salmon: function (str) {
+        return chalk.keyword('salmon')(str);
     }
 }

@@ -7,8 +7,6 @@ const CLI      = require('clui');
 const Spinner  = CLI.Spinner;
 const game     = new Game();
 
-require('dotenv').config()
-
 const { HELPER, INSTRUCTIONS } = require('./utils/instructions');
 const { isCoordinateValid }    = require('./utils/validateCoords');
 
@@ -119,10 +117,10 @@ function settingsMenu() {
         switch (menu.selection) {
             case ' Emoji Board':
                 inquirer.prompt(questions[1]).then(option => {
-                    if (option.emoji === ' Yes') {
-                        process.env.EMOJI = true;
+                    if (option.emoji === ' On') {
+                        game.emojiBoard = true;
                     } else {
-                        process.env.EMOJI = false;
+                        game.emojiBoard = false;
                     }
                     clearTerm(settingsMenu);
                 });
@@ -132,15 +130,15 @@ function settingsMenu() {
                     switch (option.boardSize) {
                         case ' 12x12':
                             game.drawBoards(12);
-                            process.env.LAST_COORD = 'L12'
+                            game.lastCoord = 'L12'
                             break;
                         case ' 15x15':
                             game.drawBoards(15);
-                            process.env.LAST_COORD = 'O15'
+                            game.lastCoord = 'O15'
                             break;
                         case ' 20x20':
                             game.drawBoards(20);
-                            process.env.LAST_COORD = 'T20'
+                            game.lastCoord = 'T20'
                             break;
                         default:
                             game.drawBoards(10);
@@ -177,11 +175,9 @@ function configureP1Ships(ships) {
         console.log('\n' + game.playerOne.board + HELPER);
     }
 
-    const { LAST_COORD } = process.env;
-
     const INSTRUCTION =
     ` Ships remaining [type, size]: ${chalk.dim(JSON.stringify(ships).replace(/"/g, "'"))}` +
-    (ships.length === 5 ? `\n   Use coordinates A1-${LAST_COORD} and left, right, up or down\n` : '\n') +
+    (ships.length === 5 ? `\n   Use coordinates A1-${game.lastCoord} and left, right, up or down\n` : '\n') +
     `   Place a ship! ${chalk.dim('e.g. cruiser b3 right')}`;
 
     const question = [
@@ -194,7 +190,7 @@ function configureP1Ships(ships) {
                     const directive = value.replace(/\s+/g, ' ').split(' ');
 
                     if (directive.length !== 3) {
-                        return 'Please provide a ship, a starting coordinate, and a direction. e.g. \'Battleship B5 Right\'';
+                        return `Please provide a ship, a starting coordinate, and a direction. e.g. ${chalk.keyowrd('salmon')('Battleship B5 Right')}`;
                     }
 
                     var [ ship, coords, direction ] = directive;
@@ -229,7 +225,7 @@ function configureP1Ships(ships) {
                     );
                 }
             }
-            console.log('\n' + game.playerOne.board + '\n'); 
+            console.log('\n' + game.playerOne.board + '\n');
             configureP1Ships(ships);
         }
     })
@@ -273,13 +269,11 @@ function takeTurn() {
         return gameOver();
     }
 
-    const { LAST_COORD } = process.env;
-
     const question = [
         {
             type: 'input',
             name: 'coords',
-            message: ` Take a guess! Enter coordinates A1-${LAST_COORD}: ${chalk.dim('(e.g. B7)')}`,
+            message: ` Take a guess! Enter coordinates A1-${game.lastCoord}: ${chalk.dim('(e.g. B7)')}`,
             validate: value => {
                 return commandCenter(value, () => {
                     if (isCoordinateValid(value, game.boardSize)) {
@@ -377,3 +371,5 @@ function __continue(callback) {
 
 /* EXECUTE PROGRAM: */
 clearTerm(mainMenu, 'init');
+
+module.exports = game;
