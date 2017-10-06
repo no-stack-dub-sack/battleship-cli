@@ -19,9 +19,7 @@ const P1_SHIPS = [
 ];
 
 /** TODO:
-  * make sure that CPU ai works with new board size options
   * add more messages for hits and misses and randomize
-  * make AI smarter
 **/
 
 /* Clears Term & ASCII ART! */
