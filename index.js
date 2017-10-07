@@ -1,10 +1,9 @@
 #!/usr/bin/env node
-const Game     = require('./lib/Game');
-const chalk    = require('chalk');
-const figlet   = require('figlet');
-const inquirer = require('inquirer');
-const CLI      = require('clui');
-const Spinner  = CLI.Spinner;
+const Game        = require('./lib/Game');
+const chalk       = require('chalk');
+const figlet      = require('figlet');
+const inquirer    = require('inquirer');
+const { Spinner } = require('clui');
 
 const { HELPER, INSTRUCTIONS } = require('./utils/instructions');
 const { isCoordinateValid }    = require('./utils/validateCoords');
