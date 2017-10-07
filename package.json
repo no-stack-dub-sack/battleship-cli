@@ -1,6 +1,6 @@
 {
   "name": "battleship-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Battleship CLI game, built with JavaScript",
   "main": "index.js",
   "author": "Peter A. Weinberg <pweinberg633@gmail.com>",
