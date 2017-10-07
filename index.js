@@ -5,22 +5,17 @@ const figlet   = require('figlet');
 const inquirer = require('inquirer');
 const CLI      = require('clui');
 const Spinner  = CLI.Spinner;
-const game     = new Game();
 
 const { HELPER, INSTRUCTIONS } = require('./utils/instructions');
 const { isCoordinateValid }    = require('./utils/validateCoords');
-
-const P1_SHIPS = [
-    'Cruiser, 3',
-    'Submarine, 3',
-    'Battleship, 4',
-    'Destroyer, 2',
-    'Carrier, 5'
-];
+const { P1_SHIPS }             = require('./utils/keys');
 
 /** TODO:
   * add more messages for hits and misses and randomize
 **/
+
+// instantiate Game class
+var game = new Game();
 
 /* Clears Term & ASCII ART! */
 function clearTerm(menuCallback, init) {
@@ -170,7 +165,7 @@ function settingsMenu() {
 
 function configureP1Ships(ships) {
     if (ships.length === 5) {
-        console.log('\n' + game.playerOne.board + HELPER);
+        console.log(HELPER + game.playerOne.board + '\n');
     }
 
     const INSTRUCTION =
@@ -251,11 +246,11 @@ function startGame() {
                 spinner.stop();
                 spinner.start();
                 game.attack();
-            }, 500);
+            }, 1200);
             setTimeout(() => {
                 spinner.stop();
                 takeTurn();
-            }, 900);
+            }, 1700);
         } else {
             takeTurn();
         }
@@ -290,13 +285,13 @@ function takeTurn() {
         spinner.start();
         setTimeout(() => {
             spinner.stop();
-            spinner.start();
             game.attack();
-        }, 800);
+            spinner.start();
+        }, 1200);
         setTimeout(() => {
             spinner.stop();
             takeTurn();
-        }, 1200);
+        }, 1700);
     });
 }
 
@@ -337,8 +332,6 @@ function commandCenter(value, validations) {
     switch (value) {
         case 'help':
             return INSTRUCTIONS;
-        case 'show board':
-            return game.playerOne.board;
         case 'show score':
             return game.status;
         case 'q':

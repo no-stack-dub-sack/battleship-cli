@@ -36,7 +36,7 @@ module.exports = {
     },
     replacify: function(board) {
         if (require('../index').emojiBoard) {
-            return board
+            return JSON.stringify(board)
                 .slice(1, -1)
                 .replace(/\],/g, ']\n')
                 .replace(/"/g, '\'')
@@ -46,7 +46,7 @@ module.exports = {
                 .replace(/BTL|CAR|SUB|CRU|DST/g, ' 🚤 ');
         }
 
-        return board
+        return JSON.stringify(board)
             .slice(1, -1)
             .replace(/\],/g, ']\n')
             .replace(/"/g, '\'')

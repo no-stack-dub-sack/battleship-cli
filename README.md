@@ -24,7 +24,6 @@ A super cool, fun, and easy to play command line implementation of Battleship, t
 _Type `help` and hit return at any time during gameplay to show these instructions._
 
 ### Other helpful commands:
-- Type `show board` at any time to see your own board including ship configuration, ships hit, and misses.
 - Type `show score` at any time to check the status of the game.
 - Type `quit` or `q` at any time to quit the game.
 

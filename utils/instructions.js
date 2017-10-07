@@ -5,7 +5,6 @@ const INSTRUCTIONS = `
 Type ${chalk.red('help')} and hit return at any time to show these instructions.
 
 ${chalk.bold('Other helpful commands:')}
-- Type ${salmon('show board')} at any time to see your own board including ship configuration, ships hit, and misses.
 - Type ${salmon('show score')} at any time to check the status of the game.
 - Type ${salmon('quit')} or ${salmon('q')} at any time to quit the game.
 
@@ -48,5 +47,5 @@ ${chalk.bold('Legend:')}
 
 module.exports = {
     INSTRUCTIONS,
-    HELPER: `\n\nType the command ${salmon('show board')} and press ${chalk.green('return')} at any time to see your baord!\n`
+    HELPER: `\nType the command ${salmon('show score')} and press ${chalk.green('return')} at any time to check the status of the game!\n\n`
 }

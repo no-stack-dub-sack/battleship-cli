@@ -1,4 +1,5 @@
 const { salmon } = require('../utils/helpers');
+const chalk      = require('chalk');
 
 module.exports = {
     INVALID: {
@@ -10,7 +11,7 @@ module.exports = {
         HIT_SHIP: 'You hit a ship!',
         MISSED: 'Drats, you missed!',
         SUNK_SHIP: 'You bastard! You sunk the computer\'s ',
-        LOST_TURN: 'You already guessed that space! I have zero sympathy, and you lose a turn.',
+        LOST_TURN: chalk.magenta('You already guessed that space! I have zero sympathy, and you lose a turn.'),
     },
     CPU: {
         HIT_SHIP: 'Uh oh. The computer hit your ',
