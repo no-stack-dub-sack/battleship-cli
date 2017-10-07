@@ -1,7 +1,7 @@
 # Battleship-Cli
 A super cool, fun, and easy to play command line implementation of Battleship, the classic 2-player guessing game. Built in JavaScript, `battleship-cli` is a simple NodeJS program, with CLI interface enabled by __[InquirerJS](https://github.com/SBoudrias/Inquirer.js/)__, and colorized by __[chalk](https://github.com/chalk/chalk)__.
 
-![image](http://res.cloudinary.com/dmvcjmjkn/image/upload/v1507261203/battleship_demo_o2qgml.gif)
+![image](http://g.recordit.co/SYaveWe1xt.gif)
 
 ## Requirements:
 - Node
