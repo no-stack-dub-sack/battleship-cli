@@ -6,8 +6,8 @@ const inquirer    = require('inquirer');
 const { Spinner } = require('clui');
 
 const { HELPER, INSTRUCTIONS } = require('./utils/instructions');
-const { isCoordinateValid }    = require('./utils/validateCoords');
-const { P1_SHIPS }             = require('./utils/keys');
+const { isCoordinateValid }             = require('./utils/validateCoords');
+const { P1_SHIPS }                      = require('./utils/keys');
 
 /** TODO:
   * add more messages for hits and misses and randomize
@@ -164,7 +164,7 @@ function settingsMenu() {
 
 function configureP1Ships(ships) {
     if (ships.length === 5) {
-        console.log(HELPER + game.playerOne.board + '\n');
+        console.log(HELPER + '\n' + game.playerOne.board + '\n');
     }
 
     const INSTRUCTION =
@@ -203,9 +203,11 @@ function configureP1Ships(ships) {
     // recurse until all ships are placed
     inquirer.prompt(question).then(() => {
         if (ships.length === 1) {
-            console.log('\n' + game.playerOne.board + '\n');
-            game.setInitialState();
-            startGame();
+            clearTerm(() => {
+                console.log(HELPER + '\n' + game.playerOne.board + '\n');
+                game.setInitialState();
+                startGame();
+            });
         } else {
             ships = [];
             for (let ship of game.playerOne.ships) {
@@ -217,8 +219,11 @@ function configureP1Ships(ships) {
                     );
                 }
             }
-            console.log('\n' + game.playerOne.board + '\n');
-            configureP1Ships(ships);
+
+            clearTerm(() => {
+                console.log(HELPER + '\n' + game.playerOne.board + '\n');
+                configureP1Ships(ships);
+            });
         }
     })
 }
@@ -239,24 +244,20 @@ function startGame() {
 
     inquirer.prompt(question).then(() => {
         if (!game.coinToss) {
-            const spinner = new Spinner('');
-            spinner.start();
-            setTimeout(() => {
-                spinner.stop();
-                spinner.start();
-                game.attack();
-            }, 1200);
-            setTimeout(() => {
-                spinner.stop();
-                takeTurn();
-            }, 1700);
+            clearTerm(() => {
+                console.log(HELPER);
+                takeCpuTurn();
+            });
         } else {
-            takeTurn();
+            clearTerm(() => {
+                console.log(HELPER + '\n' + game.playerOne.board + '\n');
+                takeP1Turn();
+            });
         }
     })
 }
 
-function takeTurn() {
+function takeP1Turn() {
     if (game.gameOver) {
         return gameOver();
     }
@@ -279,22 +280,40 @@ function takeTurn() {
     ];
 
     inquirer.prompt(question).then(move => {
+        clearTerm(() => {
+            console.log(HELPER);
+            const spinner = new Spinner('');
+            spinner.start();
+            setTimeout(() => {
+                spinner.stop();
+                game.attack(move.coords);
+                __continue(() => {
+                    takeCpuTurn();
+                });
+            }, 500);
+        });
+    });
+}
+
+function takeCpuTurn() {
+    clearTerm(() => {
+        console.log(HELPER);
         const spinner = new Spinner('');
-        game.attack(move.coords);
         spinner.start();
         setTimeout(() => {
             spinner.stop();
             game.attack();
             spinner.start();
-        }, 1200);
+        }, 500);
         setTimeout(() => {
             spinner.stop();
-            takeTurn();
-        }, 1700);
+            takeP1Turn();
+        }, 1000);
     });
 }
 
 function gameOver() {
+
     const question = [
         {
             type: 'list',
@@ -306,13 +325,18 @@ function gameOver() {
     ];
 
     inquirer.prompt(question).then(answer => {
+        const spinner = new Spinner('');
         switch (answer.newGame) {
             case ' Yes!':
                 console.log('   Ready? Here we go again...');
+                spinner.start();
                 setTimeout(() => {
-                    game.reset();
-                    game.populateP1Ships();
-                    configureP1Ships(P1_SHIPS);
+                    spinner.stop();
+                    clearTerm(() => {
+                        game.reset();
+                        game.populateP1Ships();
+                        configureP1Ships(P1_SHIPS);
+                    });
                 }, 1000);
                 break;
             case ' Main Menu':

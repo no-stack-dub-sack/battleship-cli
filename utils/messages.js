@@ -11,12 +11,12 @@ module.exports = {
         HIT_SHIP: 'You hit a ship!',
         MISSED: 'Drats, you missed!',
         SUNK_SHIP: 'You bastard! You sunk the computer\'s ',
-        LOST_TURN: chalk.magenta('You already guessed that space! I have zero sympathy, and you lose a turn.'),
+        LOST_TURN: salmon('You already guessed that space! I have zero sympathy, and you lose a turn.'),
     },
     CPU: {
         HIT_SHIP: 'Uh oh. The computer hit your ',
         SUNK_SHIP: 'Ha ha! The computer sunk your ',
-        MISSED: 'The computer missed. Hard to believe.\n',
+        MISSED: 'The computer missed. Hard to believe.',
         LOST_TURN: 'Wow, the computer is wasting torpedoes, it already guessed that space!',
     },
     duplicatePlacement: function(ship) {
