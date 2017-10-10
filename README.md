@@ -19,7 +19,7 @@ A super cool, fun, and easy to play command line implementation of Battleship, t
   - In your favorite terminal, simply run the `battleship` command from any directory
   - For the best experience use a terminal that has full color and emoji support
 
-- _*Note:_ if anything except version `1.0.4` gets pulled down, please explicitly install the correct version instead by appending `@1.0.4` to either command.
+**_*Note:_** If anything except version `1.0.4` gets pulled down, please explicitly install the correct version instead by appending `@1.0.4` to either command.
 
 ## Battleship-CLI Instructions
 
