@@ -7,9 +7,9 @@ A super cool, fun, and easy to play command line implementation of Battleship, t
 - Node
 
 ## Installation & Usage:
-- __With NPM:__
+- __With NPM*:__
   - `npm install -g battleship-cli`
-- __With Yarn:__
+- __With Yarn*:__
   - `yarn global add battleship-cli`
 - __Manually (for hacking):__
   - clone repo
@@ -18,6 +18,8 @@ A super cool, fun, and easy to play command line implementation of Battleship, t
 - __To play:__
   - In your favorite terminal, simply run the `battleship` command from any directory
   - For the best experience use a terminal that has full color and emoji support
+
+- _*Note:_ if anything except version `1.0.4` gets pulled down, please explicitly install the correct version instead by appending `@1.0.4` to either command.
 
 ## Battleship-CLI Instructions
 
@@ -66,9 +68,6 @@ _Type `help` and hit return at any time during gameplay to show these instructio
 ## Screenshots:
 ### Placing Ships
 ![image](http://g.recordit.co/3QuxAc4OkA.gif)
-
-### Score Updates
-![image](http://g.recordit.co/Xrk9S8FiAB.gif)
 
 ### Gameplay (10x10 Emoji Board)
 ![image](http://g.recordit.co/7hnn3ZBESt.gif)
