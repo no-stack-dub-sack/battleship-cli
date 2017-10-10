@@ -6,8 +6,8 @@ const inquirer    = require('inquirer');
 const { Spinner } = require('clui');
 
 const { HELPER, INSTRUCTIONS } = require('./utils/instructions');
-const { isCoordinateValid }             = require('./utils/validateCoords');
-const { P1_SHIPS }                      = require('./utils/keys');
+const { isCoordinateValid }    = require('./utils/validateCoords');
+const { P1_SHIPS }             = require('./utils/keys');
 
 /** TODO:
   * add more messages for hits and misses and randomize
