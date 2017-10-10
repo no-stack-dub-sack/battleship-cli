@@ -65,25 +65,24 @@ _Type `help` and hit return at any time during gameplay to show these instructio
 
 ## Screenshots:
 ### Placing Ships
-![image](https://user-images.githubusercontent.com/18563015/31310408-9a65e070-ab65-11e7-829f-c5cf1d37e9a2.png)
+![image](http://g.recordit.co/3QuxAc4OkA.gif)
 
-### Check Score
-![image](https://user-images.githubusercontent.com/18563015/31310598-f4ed1650-ab68-11e7-977a-6c53dd4c7559.png)
-
-### 20x20 Board
-![image](https://user-images.githubusercontent.com/18563015/31310450-83c47e52-ab66-11e7-80cb-34666fd67117.png)
+### Score Updates
+![image](http://g.recordit.co/Xrk9S8FiAB.gif)
 
 ### Gameplay (10x10 Emoji Board)
-![image](https://user-images.githubusercontent.com/18563015/31310508-3c14a612-ab67-11e7-8841-9779f360afa7.png)
+![image](http://g.recordit.co/7hnn3ZBESt.gif)
 
 ### Gameplay (12x12 Plain Board)
-![image](https://user-images.githubusercontent.com/18563015/31310549-df1bad4c-ab67-11e7-83b4-1520d35ae568.png)
+![image](http://g.recordit.co/fk6kvc6vxy.gif)
+
+### 20x20 Board
+![image](https://user-images.githubusercontent.com/18563015/31363682-0a3d41d0-ad2e-11e7-8132-2100ed6feba7.png)
 
 ### Helpful Validations
 ![image](https://user-images.githubusercontent.com/18563015/31261966-d2a2a252-aa25-11e7-8b35-31e89decf972.png)
 ![image](https://user-images.githubusercontent.com/18563015/31262035-3cd1d3b4-aa26-11e7-92b5-526acebaf46e.png)
 ![image](https://user-images.githubusercontent.com/18563015/31259657-6cbbbed8-aa16-11e7-9f30-085b48ad5ed9.png)
-![image](https://user-images.githubusercontent.com/18563015/31310563-0e8155a0-ab68-11e7-8f35-70fce409ec19.png)
 
 ### In-Game Instructions
 ![image](https://user-images.githubusercontent.com/18563015/31310573-36a20250-ab68-11e7-8268-8e025669476c.png)
